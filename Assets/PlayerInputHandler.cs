@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class PlayerInputHandler : MonoBehaviour
 {
     [Header("Input Action Asset")]
     [SerializeField] private InputActionAsset playerControls;
@@ -36,6 +36,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
         rotationAction = mapReference.FindAction(rotation);
         jumpAction = mapReference.FindAction(jump);
         sprintAction = mapReference.FindAction(sprint);
+
+        SubscribeActionValuesToInputEvents();
     }
 
     private void SubscribeActionValuesToInputEvents()
@@ -44,6 +46,23 @@ public class NewMonoBehaviourScript : MonoBehaviour
         movementAction.canceled += inputInfo => MovementInput = Vector2.zero;
 
         rotationAction.performed += inputInfo => RotationInput = inputInfo.ReadValue<Vector2>();
-        rotationAction.performed += inputInfo => RotationInput = inputInfo.ReadValue<Vector2>();
+        rotationAction.canceled += inputInfo => RotationInput = Vector2.zero;
+
+        jumpAction.performed += inputInfo => JumpTriggered = true;
+        jumpAction.canceled += inputInfo => JumpTriggered = false;
+
+        sprintAction.performed += inputInfo => SprintTriggered = true;
+        sprintAction.canceled += inputInfo => SprintTriggered = false;
     }
+
+    private void OnEnable()
+    {
+        playerControls.FindActionMap(actionMapName).Enable();
+    }
+
+    private void OnDisable()
+    {
+        playerControls.FindActionMap(actionMapName).Disable();
+    }
+
 }
