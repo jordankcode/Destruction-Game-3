@@ -10,6 +10,7 @@ public class Breakable : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
     }
 
@@ -19,6 +20,8 @@ public class Breakable : MonoBehaviour
         if(isBroken==true)
         {
             rb.isKinematic = false;
+
+            Invoke("DestroyPiece", 3);
         }
     }
 
@@ -29,5 +32,10 @@ public class Breakable : MonoBehaviour
         {
             isBroken = true;
         }
+    }
+
+    void DestroyPiece()
+    {
+        Destroy(this.gameObject);
     }
 }
