@@ -18,6 +18,8 @@ public class WeaponSwitching : MonoBehaviour
     private int selectedWeapon;
     private float timeSinceLastSwitch;
 
+    public static bool Upgrade = false;
+    public static bool Upgrade2 = false;
     private void Start()
     {
         SetWeapons();
@@ -42,9 +44,14 @@ public class WeaponSwitching : MonoBehaviour
     {
         int previousSelectedWeapon = selectedWeapon;
 
-        for (int i = 0; i < weaponKeys.Length; i++)
-            if (weaponKeys[i].WasPressedThisFrame() && timeSinceLastSwitch >= switchTime)
-                selectedWeapon = i;
+        if (weaponKeys.Length > 0 && weaponKeys[0].WasPressedThisFrame() && timeSinceLastSwitch >= switchTime)
+            selectedWeapon = 0;
+
+        if (Upgrade && weaponKeys.Length > 1 && weaponKeys[1].WasPressedThisFrame() && timeSinceLastSwitch >= switchTime)
+            selectedWeapon = 1;
+
+        if (Upgrade2 && weaponKeys.Length > 2 && weaponKeys[2].WasPressedThisFrame() && timeSinceLastSwitch >= switchTime)
+            selectedWeapon = 2;
 
         if (previousSelectedWeapon != selectedWeapon) Select(selectedWeapon);
 
