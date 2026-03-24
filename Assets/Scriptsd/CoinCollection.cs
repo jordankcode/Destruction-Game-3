@@ -11,13 +11,13 @@ public class CoinCollection : MonoBehaviour
     public TextMeshProUGUI CoinText;
     private void Update()
     {
-        if (Coin >= 40)
+        if (Coin >= 35)
         {
             WeaponSwitching.Upgrade = true; 
 
         }
 
-        if (Coin >= 50)
+        if (Coin >= 40)
         {
             WeaponSwitching.Upgrade2 = true;
         }
