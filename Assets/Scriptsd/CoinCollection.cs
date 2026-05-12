@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CoinCollection : MonoBehaviour
 {
-    private int Coin = 0;
+    private int Coin = -32;
     public bool Upgrade = false;
 
 
