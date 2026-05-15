@@ -3,34 +3,37 @@ using UnityEngine;
 
 public class Breakable : MonoBehaviour
 {
-
     public Rigidbody rb;
-
     public bool isBroken;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(isBroken==true)
+        if (isBroken == true)
         {
             rb.isKinematic = false;
-
-            Invoke("DestroyPiece", 3);
         }
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Breaker")
+        if (other.gameObject.tag == "Breaker")
         {
-            isBroken = true;
+            if (!isBroken)
+            {
+                isBroken = true;
+
+                // Report to ObjectiveManager using this object's tag (e.g. "Chair")
+                if (ObjectiveManager.Instance != null)
+                    ObjectiveManager.Instance.ReportDestruction(gameObject.tag);
+
+                Invoke("DestroyPiece", 3);
+            }
         }
     }
 

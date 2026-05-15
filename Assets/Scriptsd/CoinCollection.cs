@@ -7,14 +7,13 @@ public class CoinCollection : MonoBehaviour
     private int Coin = 0;
     public bool Upgrade = false;
 
-
     public TextMeshProUGUI CoinText;
+
     private void Update()
     {
         if (Coin >= 35)
         {
-            WeaponSwitching.Upgrade = true; 
-
+            WeaponSwitching.Upgrade = true;
         }
 
         if (Coin >= 40)
@@ -25,12 +24,18 @@ public class CoinCollection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-       if(other.transform.tag == "Coin")
+        if (other.transform.tag == "Coin")
         {
             Coin++;
-
             CoinText.text = "Coins: " + Coin.ToString();
             Debug.Log(Coin);
         }
+    }
+
+    public void AddBonusCoins(int amount)
+    {
+        Coin += amount;
+        CoinText.text = "Coins: " + Coin.ToString();
+        Debug.Log("Bonus coins awarded: " + amount);
     }
 }
